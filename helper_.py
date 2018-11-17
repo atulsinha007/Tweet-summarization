@@ -20,6 +20,8 @@ def merge_for_summary(lis):
 		finally:
 			st = fileo.read()
 			#print(st)
+	else:
+		st = '\n'.join(lis)
 	return st
 
 def compute_idf(docList):

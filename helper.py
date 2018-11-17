@@ -1,5 +1,20 @@
 #helper.py
 from tfidf import *
+import numpy as np 
+import pandas as pd 
+import nltk
+# import inspect
+# from textacy.vsm import Vectorizer
+# # import textacy.vsm
+# from nltk.tokenize import TweetTokenizer
+# from scipy.spatial.distance import cosine
+# from tqdm import *
+import re
+import os
+# import kenlm
+import math
+from nltk.util import bigrams
+# from pymprog import *
 predefined_threshold = 0.5
 content_words = ['kerala', 'flood', 'injured', 'dead', 
 				'missing', 'live', 'infrastructure', 
@@ -83,6 +98,14 @@ def content_based_segregation(tweets):
 			non_useful_tweets.add(tuple(tweet))
 	return useful_tweets, list(non_useful_tweets)
 
+def Merge_for_summary(lis):
+	all_bigrams = [list(bigrams([token for token in tweets])) for tweets in nltk_tweets]
+	starting_nodes = [single_bigram[0] for single_bigram in all_bigrams]
+	end_nodes = [single_bigram[-1] for single_bigram in all_bigrams]
+	all_bigrams = [node for single_bigram in all_bigrams for node in single_bigram]
+	all_bigrams = list(set(all_bigrams))
+
+	bigraph = make_bigram_graph(all_bigrams, starting_node)
 
 def segregation(tweets):
 	dic = {}
