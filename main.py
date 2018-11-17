@@ -2,15 +2,20 @@ import re
 import csv
 from operator import itemgetter
 from collections import defaultdict
-
+import nltk
+#print("hello world!")
 content_words = ['kerala', 'flood', 'injured', 'dead', 
 				'missing', 'live', 'infrastructure', 
 				'collapse', 'livestock', 'building', 
 				'casuality', 'food', 'keralaflood', 'died',
 				'destroyed', 'death', 'deaths', 'damaged', 'hundreds', 
-				'thousands', 'bridges', '#keralaflood']
-
-
+				'thousands', 'bridges', 'keralaflood']
+stemmer_obj = nltk.stem.porter.PorterStemmer()
+stemmed_content_words = [stemmer_obj.stem(content_word).lower() for content_word in content_words]
+print(stemmed_content_words)
+def effective_match_with_a_content_word(word):
+	return stemmer_obj.stem(word.lower()) in stemmed_content_words
+#print( effective_match('damaging'))
 def isNum(s):
     try:
         int(s)
@@ -75,7 +80,7 @@ def content_based_segregation(tweets):
 				useful_tweets.add(tuple(tweet))
 				break
 			for word in content_words:
-				if word.lower() == token.lower():
+				if effective_match_with_a_content_word(word):
 					useful_tweets.add(tuple(tweet))
 					flag = True
 					break
