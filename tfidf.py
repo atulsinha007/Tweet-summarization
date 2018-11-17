@@ -2,7 +2,7 @@ import re
 import csv
 from operator import itemgetter
 from collections import defaultdict
-
+import math
 def compute_tf(wordDict, bow):
 	tfDict = {}
 	bowCount = len(bow)
@@ -18,6 +18,7 @@ def compute_idf(docList):
 	
 	idfDict = dict.fromkeys(docList[0].keys(), 0)
 	# del(idfDict[''])
+	
 	for doc in docList:
 		for word, val in doc.items():
 			if val > 0:
@@ -27,9 +28,8 @@ def compute_idf(docList):
 		if float(val) == 0.0:
 			idfDict[word] = 0.0
 		else:
-			print("======================================")
-			print(N, float(val))
 			idfDict[word] = math.log10(N / float(val))
+			
 		
 	return idfDict
 
@@ -78,6 +78,5 @@ def TF_IDF(tweets):
 		tf_i = listofdic_tf[i]
 		tfidf.append(compute(tf_i, idfDict))
 
-	for i in range(len(tweets)):
-		print(tweet_score(tfidf[i]))
+	return tweet_score
 
