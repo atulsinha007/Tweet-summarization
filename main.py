@@ -12,13 +12,13 @@ content_words = ['kerala', 'flood', 'injured', 'dead',
 
 
 def isNum(s):
-    try:
-        int(s)
-        float(s) # for int, long, float and complex
-    except ValueError:
-        return False
+	try:
+		int(s)
+		float(s) # for int, long, float and complex
+	except ValueError:
+		return False
 
-    return True
+	return True
 
 csv_file = "tweets.txt"
 def loadtext(fileo):
@@ -94,32 +94,31 @@ def segregation(tweets):
 			if token.lower() in set(content_words):
 				dic[tuple(tweet)] += 1
 	finalized_tweets = []
-	# for tweet in tweets:
-	# 	print(dic[tuple(tweet)])
-	# for x in dic:
-	# 	finalized_tweets.append(x)
-	# return finalized_tweets
 	for x in tweets:
 		if dic[tuple(x)] > 2:
 			finalized_tweets.append(x)
 	return finalized_tweets
 
+
+
 def main():
 	tweets = loadtext(csv_file)
 	# print(tweets)
-	print("-------------------------\n\n")
+	# print("-------------------------\n\n")
 	tweets = tokenize(tweets)
 	# print(tweets)
-	print(len(tweets))
-	print("-------------------------\n\n")
+	# print(len(tweets))
+	# print("-------------------------\n\n")
 	useful_tweets, non_useful_tweets = content_based_segregation(tweets)
-	print(useful_tweets)
-	print(len(useful_tweets))
-	print("-------------------------\n\n")
+	# print(useful_tweets)
+	# print(len(useful_tweets))
+	# print("-------------------------\n\n")
+	useful_tweets = list(useful_tweets)
 	useful_tweets = segregation(useful_tweets)
 
-	print(useful_tweets)
-	print(len(useful_tweets))
+	# print(useful_tweets)
+	# print(len(useful_tweets))
+
 
 
 
