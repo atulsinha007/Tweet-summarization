@@ -89,11 +89,14 @@ def content_based_segregation(tweets):
 
 def segregation(tweets):
 	dic = {}
+	counter = 0
+	
 	for tweet in tweets:
 		dic[tuple(tweet)] = 0
 		for token in tweet:
 			if token.lower() in set(content_words):
 				dic[tuple(tweet)] += 1
+		counter += 1
 	finalized_tweets = []
 	for x in tweets:
 		if dic[tuple(x)] > 2:
@@ -114,8 +117,8 @@ def main():
 	# print(useful_tweets)
 	# print(len(useful_tweets))
 	# print("-------------------------\n\n")
-	#useful_tweets = list(useful_tweets)
-	#useful_tweets = segregation(useful_tweets)
+	useful_tweets = list(useful_tweets)
+	useful_tweets = segregation(useful_tweets)
 
 	print(useful_tweets)
 	print(len(useful_tweets))
