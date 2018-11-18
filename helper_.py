@@ -4,7 +4,8 @@ import time
 import helper
 
 csv_file = "tweets.txt"
-
+# csv_file = 'test.txt'
+no_of_tweets = 1
 def compute_idf(docList):
 	import math
 	idfDict = {}
@@ -51,6 +52,6 @@ def return_final_list(list_sent):
 	
 	time.sleep(1.5)
 	#print(random.random())
-	list_final = random.sample(list_sent, 1)
+	list_final = random.sample(list_sent, no_of_tweets)
 	#print(list_final)
 	return list_final

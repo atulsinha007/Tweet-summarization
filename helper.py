@@ -16,6 +16,7 @@ import math
 from nltk.util import bigrams
 # from pymprog import *
 predefined_threshold = 0.5
+n_content_words = 1
 content_words = ['kerala', 'flood', 'injured', 'dead', 
 				'missing', 'live', 'infrastructure', 
 				'collapse', 'livestock', 'building', 
@@ -23,6 +24,7 @@ content_words = ['kerala', 'flood', 'injured', 'dead',
 				'destroyed', 'death', 'deaths', 'damaged', 'hundreds', 
 				'thousands', 'bridges', 'keralaflood']
 
+# content_words = ['ranveer', 'deepika', 'deepveer', 'congrats', 'congratuations', 'India', 'singh', 'padukone', 'husband', 'wife', 'couple']
 
 def isNum(s):
 	try:
@@ -34,6 +36,7 @@ def isNum(s):
 	return True
 
 csv_file = "tweets.txt"
+# csv_file = 'test.txt'
 def loadtext(fileo):
 	if '.csv' in fileo:
 		csv_file = fileo
@@ -159,7 +162,7 @@ def segregation(tweets):
 		counter += 1
 	finalized_tweets = []
 	for x in tweets:
-		if dic[tuple(x)] > 2:
+		if dic[tuple(x)] > n_content_words:
 			finalized_tweets.append(x)
 	return finalized_tweets
 def return_final_List(lis):
