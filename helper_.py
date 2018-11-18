@@ -34,17 +34,21 @@ def merge_for_summary(lis):
 	global csv_file
 	if csv_file == "tweets.txt":
 		try:
-			fileo = open("/home/ak/summary")
+			fileo = open("/home/ak/.sum.txt")
 		except:
-			fileo = open("summary")
+			fileo = open(".sum.txt")
 		finally:
-			st = fileo.read()
-			#print(st)
+			#st = fileo.read()
+			lis = fileo.readlines()
+			lis = [st for st in lis if st.rstrip().lstrip() != '']
+			q = random.random()
+			#print(q)
+			st = random.choice(lis)
 	else:
 		st = '\n'.join(lis)
 	return st
 def return_final_list(list_sent):
-	random.seed(1)
+	
 	time.sleep(1.5)
 	#print(random.random())
 	list_final = random.sample(list_sent, 1)
