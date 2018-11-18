@@ -99,6 +99,7 @@ def content_based_segregation(tweets):
 	return useful_tweets, list(non_useful_tweets)
 
 def Merge_for_summary(lis):
+	tweets = lis
 	all_bigrams = [list(bigrams([token for token in tweets])) for tweets in nltk_tweets]
 	starting_nodes = [single_bigram[0] for single_bigram in all_bigrams]
 	end_nodes = [single_bigram[-1] for single_bigram in all_bigrams]
@@ -106,6 +107,45 @@ def Merge_for_summary(lis):
 	all_bigrams = list(set(all_bigrams))
 
 	bigraph = make_bigram_graph(all_bigrams, starting_node)
+	path = breadth_first_search(bigram_graph, starting_nodes[1], end_nodes[2])
+	bigram_paths = []
+
+	for single_start_node in tqdm(starting_nodes): 
+	    bigram_graph = make_bigram_graph(all_bigrams, single_start_node)
+	    for single_end_node in end_nodes:
+	        possible_paths = breadth_first_search(bigram_graph, single_start_node, single_end_node)
+	        for path in possible_paths: 
+	            bigram_paths.append(path)
+
+	for tweet in nltk_tweets: 
+	    bigram_paths.append(list(bigrams([token for token in tweets])))
+	word_paths = []
+	for path in tqdm(bigram_paths): 
+	    word_paths.append(make_list(path))
+
+
+	begin('COWABS')
+	x = var(str('x'), len(word_paths), bool)
+	y = var(str('y'), len(content_vocab), bool)
+	maximize(sum([linguistic_quality(word_paths[i])*informativeness(word_paths[i])*x[i] for i in range(len(x))]) + sum(y));
+	sum([x[i]*len(word_paths[i]) for i in range(len(x))]) <= L;
+	for j in range(len(y)):
+	    sum([x[i] for i in paths_with_content_words(j)])>= y[j]
+
+	for i in range(len(x)):
+	    sum(y[j] for j in content_words(i)) >= len(content_words(i))*x[i]
+
+	solve()
+	result_x =  [value.primal for value in x]
+	result_y = [value.primal for value in y]
+	end()
+	chosen_paths = np.nonzero(result_x)
+	chosen_words = np.nonzero(result_y)
+	st = ''
+	for i in chosen_paths[0]:
+	   st += str(" ").join([token.encode('ascii', 'ignore') for token in word_paths[i]])
+	   print ('. ')
+	return st
 
 def segregation(tweets):
 	dic = {}

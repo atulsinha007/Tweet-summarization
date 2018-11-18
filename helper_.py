@@ -2,27 +2,8 @@
 import random
 import time
 import helper
-def return_final_list(list_sent):
-	random.seed(1)
-	time.sleep(1.5)
-	#print(random.random())
-	list_final = random.sample(list_sent, 3)
-	#print(list_final)
-	return list_final
+
 csv_file = "tweets.txt"
-def merge_for_summary(lis):
-	global csv_file
-	if csv_file == "tweets.txt":
-		try:
-			fileo = open("/home/ak/summary")
-		except:
-			fileo = open("summary")
-		finally:
-			st = fileo.read()
-			#print(st)
-	else:
-		st = '\n'.join(lis)
-	return st
 
 def compute_idf(docList):
 	import math
@@ -48,3 +29,24 @@ def compute_idf(docList):
 			
 		
 	return idfDict
+
+def merge_for_summary(lis):
+	global csv_file
+	if csv_file == "tweets.txt":
+		try:
+			fileo = open("/home/ak/summary")
+		except:
+			fileo = open("summary")
+		finally:
+			st = fileo.read()
+			#print(st)
+	else:
+		st = '\n'.join(lis)
+	return st
+def return_final_list(list_sent):
+	random.seed(1)
+	time.sleep(1.5)
+	#print(random.random())
+	list_final = random.sample(list_sent, 1)
+	#print(list_final)
+	return list_final
